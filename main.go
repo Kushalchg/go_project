@@ -1,13 +1,88 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-
-	str_test "github.com/kushalchg/go_project/struct"
+	"log"
+	"os"
+	"time"
 )
 
-func main() {
-	fmt.Println("first line")
-	fmt.Println(str_test.Struct)
+type Expenses struct {
+	Name     string `json:name`
+	Category string `json:category`
+	Value    int    `json:value`
+}
+type CarDetail struct {
+	Id      int    `json:id`
+	CarName string `json:carName`
+	Modal   string `json:modal`
+	Cost    int    `json:cost`
+}
 
+func main() {
+	var t0 = time.Now()
+	DataArrayPractice()
+	ExtractJsonData()
+	fmt.Println(time.Since(t0))
+
+}
+
+func DataArrayPractice() {
+	var dataArray = make([]Expenses, 0, 10)
+	// append 10 data in slice
+	for i := 0; i < 10; i++ {
+		dataArray = append(dataArray, Expenses{Name: "kushal", Category: "food", Value: 200})
+	}
+
+	transformedArray, err := json.Marshal(dataArray)
+
+	if err != nil {
+		log.Fatal("error while opening json file")
+
+	}
+
+	fmt.Printf("%s\n", transformedArray)
+	StringArray := append(make([]string, 0, 10), "kusahlA")
+	fmt.Println(dataArray[0].Name)
+	fmt.Println(StringArray)
+}
+
+func ExtractJsonData() {
+
+	var CarObj []CarDetail
+	// reading the json file
+	jsonfile, err := os.ReadFile("car_details.json")
+	if err != nil {
+		log.Fatal("error while opening json file")
+
+	}
+
+	// jsonData, err := json.Marshal(jsonFile)
+
+	// if err != nil {
+	// 	log.Fatal("error while opening json file")
+	// }
+
+	// println json file give bytecode of josn and printing as string give actual code
+	// fmt.Println(jsonfile)
+	// fmt.Printf("%s\n", jsonfile)
+
+	// umnarshal the json file and convert it into the structure format
+	err = json.Unmarshal(jsonfile, &CarObj)
+	if err != nil {
+		log.Fatal("error while unmarshal", err)
+
+	}
+	// fmt.Println(CarObj)
+
+	// iterate over array of object
+
+	for index, value := range CarObj {
+		fmt.Println(value.CarName)
+		fmt.Println(index)
+	}
+	// for _, row := range CarObj {
+	// 	counter[row]++
+	// }
 }
