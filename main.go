@@ -14,10 +14,10 @@ type Expenses struct {
 	Value    int    `json:value`
 }
 type CarDetail struct {
-	Id      int    `json:id`
+	Id      int16  `json:id`
 	CarName string `json:carName`
 	Modal   string `json:modal`
-	Cost    int    `json:cost`
+	Cost    int16  `json:cost`
 }
 
 func main() {
@@ -30,19 +30,20 @@ func main() {
 
 func DataArrayPractice() {
 	var dataArray = make([]Expenses, 0, 10)
+
 	// append 10 data in slice
 	for i := 0; i < 10; i++ {
 		dataArray = append(dataArray, Expenses{Name: "kushal", Category: "food", Value: 200})
 	}
 
-	transformedArray, err := json.Marshal(dataArray)
+	// transformedArray, err := json.Marshal(dataArray)
 
-	if err != nil {
-		log.Fatal("error while opening json file")
+	// if err != nil {
+	// 	log.Fatal("error while opening json file")
 
-	}
+	// }
 
-	fmt.Printf("%s\n", transformedArray)
+	// fmt.Printf("%s", transformedArray)
 	StringArray := append(make([]string, 0, 10), "kusahlA")
 	fmt.Println(dataArray[0].Name)
 	fmt.Println(StringArray)
@@ -74,15 +75,25 @@ func ExtractJsonData() {
 		log.Fatal("error while unmarshal", err)
 
 	}
-	// fmt.Println(CarObj)
+	fmt.Println(CarObj)
 
+	fmt.Println(CarObj[0].CarName)
 	// iterate over array of object
-
-	for index, value := range CarObj {
-		fmt.Println(value.CarName)
-		fmt.Println(index)
-	}
+	// for index, value := range CarObj {
+	// 	fmt.Println(value.CarName)
+	// 	fmt.Println(index)
+	// }
 	// for _, row := range CarObj {
 	// 	counter[row]++
 	// }
+
+	GroupVehicle := make(map[string][]CarDetail)
+	fmt.Println(GroupVehicle)
+	// iterating through whole data of cars in struct format and group by their car name
+	for _, p := range CarObj {
+		GroupVehicle[p.CarName] = append(GroupVehicle[p.CarName], p)
+
+	}
+	fmt.Println(GroupVehicle)
+
 }
