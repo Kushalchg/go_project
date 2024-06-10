@@ -75,9 +75,8 @@ func ExtractJsonData() {
 		log.Fatal("error while unmarshal", err)
 
 	}
-	fmt.Println(CarObj)
+	fmt.Println("cars array=", CarObj)
 
-	fmt.Println(CarObj[0].CarName)
 	// iterate over array of object
 	// for index, value := range CarObj {
 	// 	fmt.Println(value.CarName)
@@ -87,13 +86,27 @@ func ExtractJsonData() {
 	// 	counter[row]++
 	// }
 
+	// GroupVehicle is map contain the array of CarObj for unique cars by car name
 	GroupVehicle := make(map[string][]CarDetail)
-	fmt.Println(GroupVehicle)
 	// iterating through whole data of cars in struct format and group by their car name
 	for _, p := range CarObj {
 		GroupVehicle[p.CarName] = append(GroupVehicle[p.CarName], p)
-
 	}
 	fmt.Println(GroupVehicle)
 
+	//count the number of cars with same brand name
+
+	CountVehicle := make(map[string]int)
+
+	// method 1(it require extra maps)
+	// for _, p := range CarObj {
+	// 	CountVehicle[p.CarName] = len(append(GroupVehicle[p.CarName], p))
+	// }
+
+	// method 2 (more efficient method and short one)
+	for _, cars := range CarObj {
+		CountVehicle[cars.CarName]++
+	}
+
+	fmt.Println(CountVehicle)
 }
