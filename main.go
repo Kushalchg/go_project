@@ -23,7 +23,13 @@ type CarDetail struct {
 func main() {
 	var t0 = time.Now()
 	DataArrayPractice()
-	ExtractJsonData()
+	data, err := ExtractJsonData()
+	if err != nil {
+
+		log.Printf("error on data extract %v", err)
+
+	}
+	fmt.Printf("data from main fumction %v", data)
 	fmt.Println(time.Since(t0))
 
 }
@@ -49,7 +55,7 @@ func DataArrayPractice() {
 	fmt.Println(StringArray)
 }
 
-func ExtractJsonData() {
+func ExtractJsonData() ([]CarDetail, error) {
 
 	var CarObj []CarDetail
 	// reading the json file
@@ -58,7 +64,9 @@ func ExtractJsonData() {
 		log.Fatal("error while opening json file")
 
 	}
+	// it print the json file in string format i.e it convert byte code into stirng and print in json format
 
+	// fmt.Printf("first object of json file %v \n ", string(jsonfile))
 	// jsonData, err := json.Marshal(jsonFile)
 
 	// if err != nil {
@@ -75,7 +83,7 @@ func ExtractJsonData() {
 		log.Fatal("error while unmarshal", err)
 
 	}
-	fmt.Println("cars array=", CarObj)
+	// fmt.Println("cars array=", CarObj)
 
 	// iterate over array of object
 	// for index, value := range CarObj {
@@ -92,7 +100,7 @@ func ExtractJsonData() {
 	for _, p := range CarObj {
 		GroupVehicle[p.CarName] = append(GroupVehicle[p.CarName], p)
 	}
-	fmt.Println(GroupVehicle)
+	fmt.Printf("Group vehicle by their barad name:= %v \n", GroupVehicle)
 
 	//count the number of cars with same brand name
 
@@ -108,5 +116,7 @@ func ExtractJsonData() {
 		CountVehicle[cars.CarName]++
 	}
 
-	fmt.Println(CountVehicle)
+	fmt.Printf("No of cars by brand name:=%v\n", CountVehicle)
+	return CarObj, err
+
 }
