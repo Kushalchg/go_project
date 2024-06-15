@@ -6,6 +6,9 @@ import (
 	"log"
 	"os"
 	"time"
+
+	advancefunction "github.com/kushalchg/go_project/advanceFunction"
+	structure "github.com/kushalchg/go_project/struct"
 )
 
 type Expenses struct {
@@ -22,14 +25,19 @@ type CarDetail struct {
 
 func main() {
 	var t0 = time.Now()
-	DataArrayPractice()
-	data, err := ExtractJsonData()
-	if err != nil {
+	// DataArrayPractice()
+	// data, err := ExtractJsonData()
+	// if err != nil {
 
-		log.Printf("error on data extract %v", err)
+	// 	log.Printf("error on data extract %v", err)
 
-	}
-	fmt.Printf("data from main fumction %v", data)
+	structure.StructConcept()
+	fmt.Println(advancefunction.Aggrigate(2, 3, 4, advancefunction.Add))
+
+	fmt.Println(advancefunction.Aggrigate(2, 3, 4, advancefunction.Mul))
+	fmt.Println(advancefunction.Aggrigate(2, 3, 4, advancefunction.Avg))
+	// }
+	// fmt.Printf("data from main fumction %v", data)
 	fmt.Println(time.Since(t0))
 
 }
